@@ -4,7 +4,9 @@ import express from "express";
 import { emit } from "process";
 import { Server } from "socket.io";
 import { cards } from "./Cards";
+import cors from "cors";
 const app = express();
+app.use(cors());
 app.set("port", process.env.PORT || 3001);
 var http = require("http").Server(app);
 
