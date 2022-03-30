@@ -8,11 +8,11 @@ import cors from "cors";
 const app = express();
 app.use(cors());
 app.set("port", process.env.PORT || 3001);
-var http = require("http").Server(app);
+var http = require("http").createServer(app);
 
 const io = new Server(http, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:8080",
     credentials: true,
     methods: ["GET,", "POST"],
   },
