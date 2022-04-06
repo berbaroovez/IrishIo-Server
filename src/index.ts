@@ -52,7 +52,7 @@ const activeRooms = [] as string[];
 //   console.log("listening on *:3001");
 // });
 
-const io = new Server(3000, {
+const io = new Server(parseInt(process.env.PORT) || 3000, {
   cors: {
     origin: "https://irish-io-next-test-47tt8obu6-carters.vercel.app",
     // origin: "http://localhost:3001",
