@@ -1,22 +1,24 @@
 // src/server.ts
-import e from "express";
-import express from "express";
-import { emit } from "process";
+
 import { Server } from "socket.io";
 import { cards } from "./Cards";
-import cors from "cors";
-const app = express();
-app.use(cors());
-app.set("port", process.env.PORT || 3001);
-var http = require("http").createServer(app);
+// import cors from "cors";
+// const app = express();
+// app.use(cors());
+// app.set("port", process.env.PORT || 3001);
+// var http = require("http").createServer(app);
 
-const io = new Server(http, {
-  cors: {
-    origin: "http://localhost:8080",
-    credentials: true,
-    methods: ["GET,", "POST"],
-  },
-});
+// const io = new Server(http, {
+//   cors: {
+//     origin: [
+//       "http://localhost:3000",
+//       "http://localhost:8080",
+//       "https://easytalkchat.netlify.app",
+//     ],
+//     credentials: true,
+//     methods: ["GET,", "POST"],
+//   },
+// });
 
 // simple '/' endpoint sending a Hello World
 // response
@@ -46,8 +48,16 @@ interface Game {
 }
 var connections = [] as Game[];
 const activeRooms = [] as string[];
-const server = http.listen(3001, () => {
-  console.log("listening on *:3001");
+// const server = http.listen(3001, () => {
+//   console.log("listening on *:3001");
+// });
+
+const io = new Server(3000, {
+  cors: {
+    origin: "https://irish-io-next-test-47tt8obu6-carters.vercel.app",
+    // origin: "http://localhost:3001",
+    methods: ["GET", "POST"],
+  },
 });
 
 io.on("connection", (socket) => {
@@ -192,7 +202,9 @@ io.on("connection", (socket) => {
 
         //if there are no players left, remove the game
         if (GameSnapShot.players.length === 0) {
+          console.log("NO PLAYERS LEFT REMOVING GAME");
           connections = connections.filter((game) => game.roomId !== roomId);
+          console.log("connections", connections);
         }
 
         //check to see if a host is still in the lobby if not find a new host
